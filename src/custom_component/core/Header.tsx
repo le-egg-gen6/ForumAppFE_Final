@@ -1,16 +1,33 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { BaseComponentProps } from "@/shared/component_props";
 import { formatTimeAgo } from "@/utils/date_utils";
 import { useNotificationStore } from "@/zustand/useNotificationStore";
-import { Bell, Home, MessageCircle, Search, Settings, User, Users } from "lucide-react";
+import {
+  Bell,
+  Home,
+  MessageCircle,
+  Search,
+  Settings,
+  User,
+  Users,
+} from "lucide-react";
 import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface HeaderProps extends BaseComponentProps {
   appName: string;
@@ -47,7 +64,7 @@ const Header = ({ appName, className }: HeaderProps) => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
-              placeholder={searchPlaceholder}
+              placeholder="Search for posts, people, and more..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-gray-100 border-none focus:bg-white focus:ring-2 focus:ring-blue-500 rounded-full"
@@ -256,3 +273,5 @@ const Header = ({ appName, className }: HeaderProps) => {
     </header>
   );
 };
+
+export default Header;
