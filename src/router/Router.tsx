@@ -14,12 +14,17 @@ const Loadable = (Component: LazyExoticComponent<() => JSX.Element>) => {
 const Router = () => {
   return (
     <Routes>
+      <Route path="/test" element={LoadingPageTest} />
       <Route path="/login" element={LoginPage} />
       <Route path="/register" element={RegisterPage} />
       <Route path="/validate" element={ValidatePage} />
     </Routes>
   );
 };
+
+const LoadingPageTest = Loadable(
+  lazy(() => import("@/custom_component/page/LoadingPage"))
+)
 
 const LoginPage = Loadable(
   lazy(() => import("@/custom_component/page/LoginPage"))

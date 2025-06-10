@@ -11,5 +11,6 @@ export interface UserInfo {
   email: string;
   avartar: string | null;
   createdAt: Date;
+  friendStatus: number;
   online: boolean;
 }

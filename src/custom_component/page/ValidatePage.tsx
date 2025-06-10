@@ -151,7 +151,7 @@ export default function ValidatePage() {
 
             <p className="text-sm text-gray-600">
               <Link
-                to="/"
+                to="/login"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
               >
                 Back to login
