@@ -16,7 +16,6 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { BaseComponentProps } from "@/shared/component_props";
 import { formatTimeAgo } from "@/utils/date_utils";
-import { useNotificationStore } from "@/zustand/useNotificationStore";
 import {
   Bell,
   Home,
@@ -28,14 +27,36 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
+import type { SimpleUserInfo } from "@/shared/dto/User";
+import type { FriendRequest } from "@/shared/dto/Friend";
 
 interface HeaderProps extends BaseComponentProps {
-  appName: string;
+  user: SimpleUserInfo;
+  notifications?: Notification[];
+  friendRequests?: FriendRequest[];
+  onSearch?: (query: string) => void;
+  onNotificationClick?: (notification: Notification) => void;
+  onFriendRequestAction?: (
+    requestId: number,
+    action: "accept" | "decline"
+  ) => void;
+  onUserMenuAction?: (action: string) => void;
+  searchPlaceholder?: string;
+  appName?: string;
 }
 
-const Header = ({ appName, className }: HeaderProps) => {
-  const { notifications, friendRequests } = useNotificationStore();
-
+const Header = ({
+  user,
+  notifications = [],
+  friendRequests = [],
+  onSearch,
+  onNotificationClick,
+  onFriendRequestAction,
+  onUserMenuAction,
+  searchPlaceholder = "Search for posts, people, and more...",
+  appName = "SocialHub",
+  className,
+}: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const navigationItems = [
@@ -64,7 +85,7 @@ const Header = ({ appName, className }: HeaderProps) => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
-              placeholder="Search for posts, people, and more..."
+              placeholder={searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-gray-100 border-none focus:bg-white focus:ring-2 focus:ring-blue-500 rounded-full"
