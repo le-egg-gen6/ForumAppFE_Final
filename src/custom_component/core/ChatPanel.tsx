@@ -1,26 +1,27 @@
-import { useState, useRef, useEffect } from "react";
-import {
-  X,
-  Send,
-  Phone,
-  Video,
-  Smile,
-  ImageIcon,
-  ThumbsUp,
-  MoreHorizontal,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import type { RoomInfo } from "@/shared/dto/RoomChat";
 import type { MessageInfo } from "@/shared/dto/RoomMessage";
+import { formatTime, formatTimeAgo } from "@/utils/date_utils";
+import {
+    ImageIcon,
+    MoreHorizontal,
+    Phone,
+    Send,
+    Smile,
+    ThumbsUp,
+    Video,
+    X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface ChatPanelProps {
   room: RoomInfo;
@@ -90,22 +91,6 @@ export function ChatPanel({ room, onClose }: ChatPanelProps) {
     console.log("Quick reaction sent");
   };
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
-
-  const formatMessageTime = (date: Date) => {
-    const now = new Date();
-    const diffInMinutes = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60)
-    );
-
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
-    return formatTime(date);
-  };
-
   return (
     <div className="fixed right-4 bottom-4 w-80 h-[500px] bg-white border border-gray-200 rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden">
       {/* Chat Header */}
@@ -140,7 +125,7 @@ export function ChatPanel({ room, onClose }: ChatPanelProps) {
               <p className="text-xs text-blue-100">
                 {otherParticipant.online
                   ? "Active now"
-                  : `Last seen ${formatMessageTime(new Date())}`}
+                  : `Last seen ${formatTimeAgo(new Date())}`}
               </p>
             ) : (
               <p className="text-xs text-blue-100">
