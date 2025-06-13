@@ -8,6 +8,7 @@ export interface CommentInfo {
   postId: number;
   createdAt: Date;
   reactions: Reaction[];
+  replies: CommentInfo[];
 }
 
 export interface SimpleCommentInfo {
